@@ -549,10 +549,13 @@ extern DWORD DLLEXPORT Init( SOCKET socket );
 
 BOOL MetasploitDllAttach( SOCKET socket )
 {
-    // never called, but causes an undefined reference when DelayLoading is not supported by the compiler.
-	#ifndef __MINGW32__
+    /*
+	never called in the extensions, but causes an undefined reference when DelayLoading is not supported by the compiler.
+	Each extension must define REFLECTIVEDLLINJECTION_NO_INIT before including ReflectiveLoader.c
+	*/
+#ifndef REFLECTIVEDLLINJECTION_NO_INIT
 	Init( socket );
-	#endif
+#endif
 	return TRUE;
 }
 
